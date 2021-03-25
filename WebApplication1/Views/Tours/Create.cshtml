@@ -1,0 +1,45 @@
+﻿@model WebApplication1.Tour
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Додавання тура в готель @ViewBag.HotelName</h1>
+
+<h4>Tour</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="TourName" class="control-label"></label>
+                <input asp-for="TourName" class="form-control" />
+                <span asp-validation-for="TourName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TourDuration" class="control-label"></label>
+                <input asp-for="TourDuration" class="form-control" />
+                <span asp-validation-for="TourDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManagerId" class="control-label"></label>
+                <input asp-for="ManagerId" class="form-control" />
+                <span asp-validation-for="ManagerId" class="text-danger"></span>
+            </div>
+            <input type="hidden" value="@ViewBag.HotelId" name="HotelId" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

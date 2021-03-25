@@ -39,7 +39,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Index", "Tours", new { id = manager.Id, name = manager.Id });
+            return View(manager);
         }
 
         // GET: Managers/Create

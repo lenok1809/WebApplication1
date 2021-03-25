@@ -50,10 +50,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Vouchers/Create
-        public IActionResult Create()
+        public IActionResult Create(int tourId)
         {
-            ViewData["TourId"] = new SelectList(_context.Tours, "Id", "TourName");
-            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Address");
+            //ViewData["TourId"] = new SelectList(_context.Tours, "Id", "TourName");
+            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Id");
+            ViewBag.TourId = tourId;
+            ViewBag.TourName = _context.Tours.Where(c => c.Id == tourId).FirstOrDefault().TourName;
             return View();
         }
 
@@ -62,17 +64,23 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TourId,TouristId,Price,BuyDate,StartDate")] Voucher voucher)
+        public async Task<IActionResult> Create(int tourId,[Bind("Id,TourId,TouristId,Price,BuyDate,StartDate")] Voucher voucher)
         {
+
+            voucher.TourId = tourId;
+
             if (ModelState.IsValid)
             {
                 _context.Add(voucher);
+                // tour.Manager = _context.Managers.Find(tour.ManagerId);
+                // tour.Hotel = _context.Hotels.Find(tour.HotelId);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Vouchers", new { id = tourId, name = _context.Tours.Where(c => c.Id == tourId).FirstOrDefault().TourName });
             }
-            ViewData["TourId"] = new SelectList(_context.Tours, "Id", "TourName", voucher.TourId);
-            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Address", voucher.TouristId);
-            return View(voucher);
+            // ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "CountryName", city.CountryId);
+            //return View(city);
+            return RedirectToAction("Index", "Vouchers", new { id = tourId, name = _context.Tours.Where(c => c.Id == tourId).FirstOrDefault().TourName });
         }
 
         // GET: Vouchers/Edit/5
@@ -89,7 +97,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
             ViewData["TourId"] = new SelectList(_context.Tours, "Id", "TourName", voucher.TourId);
-            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Address", voucher.TouristId);
+            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Id", voucher.TouristId);
             return View(voucher);
         }
 
@@ -126,7 +134,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TourId"] = new SelectList(_context.Tours, "Id", "TourName", voucher.TourId);
-            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Address", voucher.TouristId);
+            ViewData["TouristId"] = new SelectList(_context.Tourists, "Id", "Id", voucher.TouristId);
             return View(voucher);
         }
 

@@ -88,7 +88,7 @@ namespace WebApplication1
             modelBuilder.Entity<Manager>(entity =>
             {
                 entity.ToTable("Manager");
-
+                
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(100);

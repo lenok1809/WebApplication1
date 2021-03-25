@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Додавання ваучера туру @ViewBag.TourName</h1>
 
 <h4>Voucher</h4>
 <hr />
@@ -12,13 +12,11 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TourId" class="control-label"></label>
-                <select asp-for="TourId" class ="form-control" asp-items="ViewBag.TourId"></select>
-            </div>
+
             <div class="form-group">
                 <label asp-for="TouristId" class="control-label"></label>
-                <select asp-for="TouristId" class ="form-control" asp-items="ViewBag.TouristId"></select>
+                <select asp-for="TouristId" class="form-control" asp-items="ViewBag.TouristId"></select>
+                <span asp-validation-for="TouristId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -35,6 +33,7 @@
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
+            <input type="hidden" value="@ViewBag.TourId" name="TourId" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

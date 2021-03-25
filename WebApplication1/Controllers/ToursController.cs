@@ -57,7 +57,7 @@ namespace WebApplication1.Controllers
             
             ViewBag.HotelId = hotelId;
             ViewBag.HotelName = _context.Hotels.Where(c => c.Id == hotelId).FirstOrDefault().HotelName;
-            ViewData["ManegerId"] = new SelectList(_context.Managers, "Id", "Id");
+            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int hotelId ,[Bind("Id,TourName,TourDuration,ManegerId,HotelId")] Tour tour)
+        public async Task<IActionResult> Create(int hotelId ,[Bind("Id,TourName,TourDuration,ManagerId,HotelId")] Tour tour)
         {
             
             tour.HotelId = hotelId;
@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
             ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "HotelName", tour.HotelId);
-            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Email", tour.ManagerId);
+            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id", tour.ManagerId);
             return View(tour);
         }
 
@@ -136,7 +136,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "HotelName", tour.HotelId);
-            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Email", tour.ManagerId);
+            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id", tour.ManagerId);
             return View(tour);
         }
 
